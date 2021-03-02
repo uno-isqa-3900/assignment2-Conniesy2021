@@ -36,7 +36,7 @@ def customer_edit(request, pk):
             return render(request, 'crm/customer_list.html',
                           {'customers': customer})
     else:
-    # edit
+        # edit
         form = CustomerForm(instance=customer)
         return render(request, 'crm/customer_edit.html', {'form': form})
 
@@ -99,6 +99,8 @@ def service_delete(request, pk):
 @login_required
 def product_list(request):
     products = Product.objects.filter(created_date__lte=timezone.now())
+
+
     return render(request, 'crm/product_list.html', {'products': products})
 
 

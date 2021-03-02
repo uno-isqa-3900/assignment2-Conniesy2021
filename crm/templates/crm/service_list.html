@@ -54,20 +54,19 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
                     <td>{{ service.cleanup_time }}</td>
                     <td>{{ service.service_charge }}</td>
                     <td><a href="{% url 'crm:service_edit' pk=service.pk %}"
-                           class="btn btn-warning">Edit</a></td>
+                           class="btn btn-warning">Edit</a>
                     <td><a href=""
+                    <td><a href="{% url 'crm:service_delete' pk=service.pk %}"
+                           onclick="return confirm('Are you sure you want to delete?')"
                            class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
+
+                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
     </div>
-     <div class="row">
-         <a href="{% url 'crm:service_new' %}" class="row"><span
-                 class="btn btn-primary">Add Service</span></a>
-     </div>
-
     </body>
+    </html>
 {% endblock %}
+</html>
