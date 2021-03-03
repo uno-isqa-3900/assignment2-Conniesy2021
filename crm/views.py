@@ -1,4 +1,6 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render
@@ -99,8 +101,6 @@ def service_delete(request, pk):
 @login_required
 def product_list(request):
     products = Product.objects.filter(created_date__lte=timezone.now())
-
-
     return render(request, 'crm/product_list.html', {'products': products})
 
 
@@ -171,3 +171,18 @@ def summary(request, pk):
                                                 'services': services,
                                                 'sum_service_charge': sum_service_charge,
                                                 'sum_product_charge': sum_product_charge, })
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('crm:home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'crm/signup.html', {'form': form})
